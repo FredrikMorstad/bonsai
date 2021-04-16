@@ -1,0 +1,36 @@
+#!/bin/bash
+dir=${BASH_SOURCE%/*} 
+if [ $# -eq 0 ]
+    then
+        printf "Usage <script>
+    Options:
+        r: run
+        u: upload
+        t: terminal            
+    Commands:
+        run [.lua file]
+        upload [.lua file]
+        terminal\n"
+else
+    if [ "$1" = "r" ];
+        then
+            if [[ $2 -eq 0 ]];
+                then
+                sh $dir/nodemcu_run
+            else
+                sh $dir/nodemcu_run $2
+            fi
+    elif [ "$1" = "u" ];
+        then 
+            if [[ $2 -eq 0 ]];
+                then
+                    sh $dir/nodemcu_upload
+            else
+                sh $dir/nodemcu_upload $2
+            fi
+    elif [ "$1" = "t" ];
+        then
+            sh $dir/nodemcu_terminal
+    fi
+
+fi
