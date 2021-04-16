@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+  then
+    ls *.lua
+
+    printf "Choose file to upload: "
+
+    read msg
+
+    sudo nodemcu-tool upload "$msg"
+else
+    sudo nodemcu-tool upload $1
+fi
