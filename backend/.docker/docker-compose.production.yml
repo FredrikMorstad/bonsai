@@ -1,0 +1,11 @@
+version: "3.5"
+services:
+  production:
+    image: ghcr.io/fredrikmorstad/docker-test/prod-api:latest
+    ports:
+        - "4000:5000"
+    volumes:
+        - ../db/prod-plant_db.sqlite3:/prod-plant_db.sqlite3
+    environment:
+        production_api: 'prod'
+
