@@ -1,0 +1,19 @@
+name: Deploy on server
+
+on:
+  workflow_run:
+    workflows: ["Build and push API-image"]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into server and launching update script
+        uses: appleboy/ssh-action@master
+        with:
+          host: plants-meets-internet.td.org.uit.no
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: ./pull-and-run-latest-api.sh

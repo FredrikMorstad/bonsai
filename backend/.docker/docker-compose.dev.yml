@@ -1,0 +1,15 @@
+version: "3.5"
+services:
+  dev:
+    build: 
+      context: ..
+      dockerfile: .docker/dockerfile
+    ports:
+      - "3000:5000"
+    volumes:
+        - ../db/dev-plant_db.sqlite3:/app/dev-plant_db.sqlite3
+    environment:
+        production_api: 'dev'
+
+
+
