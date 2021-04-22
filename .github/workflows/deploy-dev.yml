@@ -1,0 +1,17 @@
+name: build and run dev
+
+on:
+  push:
+    branches: 
+      - development
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into server and launching update script
+        uses: appleboy/ssh-action@master
+        with:
+          host: plants-meets-internet.td.org.uit.no
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: ./build-and-run-dev.sh
