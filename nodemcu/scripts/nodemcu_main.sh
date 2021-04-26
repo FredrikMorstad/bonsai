@@ -48,7 +48,7 @@ parse_args(){
 
             t | terminal) shift; terminal_mode; break;;
 
-            u | upload) shift; upload; break;;
+            u | upload) shift; upload $1; break;;
 
             -h | --help ) usage;;
 
