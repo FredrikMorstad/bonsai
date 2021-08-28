@@ -16,7 +16,7 @@ gpio.config(
     }
 )
 
-on =  config.light_conf.on
+on =  config.light.on
 off = 1 - on
 light_status = -1
 
