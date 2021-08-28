@@ -5,9 +5,13 @@
         "temp": 5,
         "light_signal" : 18
     },
-    "light_conf" : {
+    "light" : {
         "light_on_from" : 10,
         "light_on_to" : 18,
         "on" : 1
+    },
+    "wifi" : {
+        "ssid" : "Network_name",
+        "pwd" : "Password"
     }
 }
