@@ -1,0 +1,13 @@
+{
+    "pins": {
+        "soil_data": 0,
+        "soil_power": 0,
+        "temp": 5,
+        "light_signal" : 18
+    },
+    "light_conf" : {
+        "light_on_from" : 10,
+        "light_on_to" : 18,
+        "on" : 1
+    }
+}
