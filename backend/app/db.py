@@ -14,7 +14,6 @@ for e in env:
         break;
 
 config = env_config[env_variables]
-print(config.ENV)
 engine = create_engine(f'sqlite:///{config.DB_URI}', connect_args={'check_same_thread': False})
 session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
@@ -22,3 +21,17 @@ Base = declarative_base()
 def get_title():
     api_name = 'PLANT-API'
     return f'{api_name}-{config.ENV}' if config.ENV != 'prod' else api_name
+
+def get_db():
+    db = session_local()
+    try :
+        yield db
+    finally:
+        db.close()
+
+def init_test_db():
+    test_engine = create_engine(f'sqlite:///:memory:', connect_args={'check_same_thread': False})
+    session_local = session_local = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
+    session = session_local()
+    Base.metadata.create_all(test_engine)
+    return session
