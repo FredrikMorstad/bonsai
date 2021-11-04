@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..db import get_db, Base, engine
 from ..schemas import Plant_base, Plant_model
-from ..curds.plant import create_plant, get_plant
+from ..cruds.plant import create_plant, get_plant
 
 Base.metadata.create_all(bind=engine)
 router = APIRouter()

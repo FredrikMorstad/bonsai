@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from ..schemas import Tokens, Login_payload
 from ..db import get_db
 from ..utils import create_token
-from ..curds.user import get_user_by_email
+from ..cruds.user import get_user_by_email
 
 router = APIRouter()
 

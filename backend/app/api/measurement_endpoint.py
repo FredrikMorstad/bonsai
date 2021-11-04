@@ -2,10 +2,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..db import get_db, Base, engine
 from ..schemas import Measurement_base,Measurement_model, Log_base
-from ..curds.plant import get_plant
+from ..cruds.plant import get_plant
 from ..utils import valid_action
 from ..api.log_endpoint import create_new_log_entry
-from ..curds.measurement import create_measurment
+from ..cruds.measurement import create_measurment
 
 Base.metadata.create_all(bind=engine)
 router = APIRouter()

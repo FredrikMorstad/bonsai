@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..schemas import Log_base, Log_model
-from ..curds.log import create_log, get_plant_log
-from ..curds.plant import get_plant
+from ..cruds.log import create_log, get_plant_log
+from ..cruds.plant import get_plant
 from ..db import get_db, Base, engine
 from ..utils import valid_action
 from math import floor
