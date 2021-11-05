@@ -9,12 +9,12 @@ class Config:
 class DevelopmentConfig(Config):
     ENV = 'dev'
     DB_NAME = "dev-plant_db"
-    DB_URI = f"{DB_NAME}.sqlite3"
+    DB_URI = f"../{DB_NAME}.sqlite3"
 
 class ProductionConfig(Config):
     ENV = 'prod'
     DB_NAME = "prod-plant_db"
-    DB_URI = f"{DB_NAME}.sqlite3"
+    DB_URI = f"../{DB_NAME}.sqlite3"
 
 class LocalConfig(Config):
     ENV = 'local'
