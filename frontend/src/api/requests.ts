@@ -1,6 +1,6 @@
 import { baseUrl } from "api/apiConstants";
-import { HTTPErrorPayload } from "api/apiModels";
-import { getTokens } from "api/token";
+import { HTTPErrorPayload, TokenPair } from "api/apiModels";
+import { getTokens, setTokens } from "api/token";
 
 class HttpError extends Error {
   readonly status: number;
@@ -13,6 +13,25 @@ class HttpError extends Error {
 
 export const get = async <T>(url: string, auth = false) => {
   const request = new Request(baseUrl + url);
+  if (auth) {
+    return authFetch<T>(request);
+  }
+  return fetch(request).then((res) => handleResponse<T>(res));
+};
+
+export const post = async <T>(
+  url: string,
+  data: any,
+  auth = false,
+) => {
+  const request = new Request(baseUrl + url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
   if (auth) {
     return authFetch<T>(request);
   }
@@ -49,4 +68,24 @@ const authFetch = <T>(request: Request) => {
   });
 };
 
+const renewAndRetry = async <T>(request: Request): Promise<T> => {
+  const { refreshToken } = getTokens();
+  try {
+    const tokens = await renewToken(refreshToken);
+    setTokens(tokens.accessToken, tokens.refreshToken);
+    request.headers.set('Authorization', `Bearer ${tokens.accessToken}`);
+    return fetch(request).then((res) => handleResponse<T>(res));
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const login = async (email: string, password: string) => {
+  const tokens = await post<TokenPair>('auth/login', { email, password });
+  console.log(tokens);
+  setTokens(tokens.accessToken, tokens.refreshToken)
+}
+
+export const renewToken = (refreshToken: string): Promise<TokenPair> =>
+  post<TokenPair>('auth/renew', { refreshToken: refreshToken });
 
