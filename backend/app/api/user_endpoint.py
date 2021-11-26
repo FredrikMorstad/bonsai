@@ -29,5 +29,3 @@ def create_new_user(new_user: New_user, db: Session=Depends(get_db)):
         raise HTTPException(status_code=409, detail=error_msg)
 
     return create_user(db, new_user)
-
-
