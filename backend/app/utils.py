@@ -21,6 +21,13 @@ def create_token(user: User_model):
         'iat': datetime.utcnow()
     }, SECRET_KEY, algorithm="HS256")
 
+def create_refresh_token(user: User_model):
+    return encode({
+        'user_id' : user.user_id ,
+        'exp' : datetime.utcnow() + timedelta(minutes=60),
+        'iat': datetime.utcnow()
+    }, SECRET_KEY, algorithm="HS256")
+
 def decode_token(token: bytes):
     try :
         return decode(token.encode("utf-8"), SECRET_KEY, algorithms="HS256")
