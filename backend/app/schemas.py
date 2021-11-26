@@ -79,6 +79,11 @@ class AccessTokenPayload(BaseModel):
     iat: int
     user_id: str
 
+class RefreshTokenPayload(BaseModel):
+    exp: int
+    iat: int
+    user_id: str
+
 class Login_payload(BaseModel):
     email: EmailStr
     password: str
@@ -88,3 +93,7 @@ class Login_payload(BaseModel):
 
 class Tokens(BaseModel):
     access_token: str
+    refresh_token: str
+
+class RefreshToken(BaseModel):
+    refresh_token: str
