@@ -4,7 +4,7 @@ import { Box } from '@chakra-ui/react';
 const HomePage = () => {
   return(
     <Box>
-      test
+      Home page
     </Box>
   )
 }
