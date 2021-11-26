@@ -2,14 +2,17 @@ import { ChakraProvider, theme } from "@chakra-ui/react";
 import * as React from "react";
 import ReactDOM from "react-dom";
 import { App } from "./App";
+import AuthenticateProvider from "context/authProvider";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <App />
-    </ChakraProvider>
+    <AuthenticateProvider>
+      <ChakraProvider theme={theme}>
+        <App />
+      </ChakraProvider>
+    </AuthenticateProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
