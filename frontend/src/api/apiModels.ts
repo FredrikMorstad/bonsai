@@ -5,6 +5,13 @@ export interface HTTPErrorPayload {
 }
 
 export interface TokenPair {
-  accessToken: string;
-  refreshToken: string;
+  access_token: string;
+  refresh_token: string;
+}
+
+export interface PartialMember {
+  first_name: string;
+  last_name: string;
+  username: string;
+  email: string;
 }

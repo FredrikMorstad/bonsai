@@ -1,5 +1,5 @@
 const baseUrl = "/api/";
-const accessTokenKey = "API_TOKEN";
-const refreshTokenKey = "REFRESH_TOKEN";
+const access_token_key = "ACCESS_TOKEN";
+const refresh_token_key = "REFRESH_TOKEN";
 
-export { baseUrl, accessTokenKey, refreshTokenKey };
+export { baseUrl, access_token_key, refresh_token_key };
