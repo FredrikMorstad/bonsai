@@ -5,10 +5,12 @@ import { renewToken } from "./auth";
 
 class HttpError extends Error {
   readonly statusCode: number;
+  readonly message: string;
 
   constructor(error: HTTPErrorPayload) {
     super(error.statusText);
     this.statusCode = error.status;
+    this.message = error.message;
   }
 }
 
@@ -35,10 +37,11 @@ export const post = async <T>(url: string, data: any, auth = false) => {
   return fetch(request).then((res) => handleResponse<T>(res));
 };
 
-function handleResponse<T>(response: Response): Promise<T> {
+async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
     const { status, statusText } = response;
-    throw new HttpError({ status, statusText } as HTTPErrorPayload);
+    const message = await response.json();
+    throw new HttpError({status, statusText, message });
   }
 
   // Handle no response bodies.

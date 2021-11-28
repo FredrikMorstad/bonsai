@@ -2,6 +2,7 @@
 export interface HTTPErrorPayload {
   status: number;
   statusText: string;
+  message: string;
 }
 
 export interface TokenPair {

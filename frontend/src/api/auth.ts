@@ -11,7 +11,7 @@ export const verifyAuthentication = async () => {
     await get_user_with_token();
     return true;
   } catch {
-    return true;
+    return false;
   }
 };
 
