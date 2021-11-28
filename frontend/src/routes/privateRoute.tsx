@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
 import { AuthenticateContext } from "context/authProvider";
 
-interface PrivateRouteProps extends RouteProps {
+export interface IRouteProps extends RouteProps {
   component: any;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({
+const PrivateRoute: React.FC<IRouteProps> = ({
   component: Component,
   ...rest
 }) => {
