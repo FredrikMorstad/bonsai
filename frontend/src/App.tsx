@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/molecules/Navbar/Navbar";
 import { AuthenticateContext } from "context/authProvider";
-import PrivateRoute from "routes/privateRoute";
+import { PrivateRoute, AuthorizationRoute } from "routes/index";
 import { HomePage, LoginPage, ProfilePage } from "components/pages/index";
 
 export const App = () => {
@@ -12,7 +12,7 @@ export const App = () => {
     <Router>
       <Navbar />
       <Switch>
-        <Route path="/login" component={LoginPage} />
+        <AuthorizationRoute path="/login" component={LoginPage} />
         <PrivateRoute path="/profile" component={ProfilePage} />
         <Route path="/" component={HomePage} />
       </Switch>
