@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { validateUser } from 'utils/registrationValidator'
-import { FormControl, Input, Flex, Button, Heading } from '@chakra-ui/react'
+import { FormControl, Input, Flex, Button, Heading, useToast } from '@chakra-ui/react'
 import "./registerForm.css"
 import { registerUser } from 'api/requests';
 import { login } from 'api/auth';
@@ -20,6 +20,7 @@ const RegisterUser: React.FC = () => {
     const [username, setUsername] = useState<string>('');
     
     const history = useHistory();
+    const toast = useToast(); 
     const [regErr, setError] = useState<undefined | string []>();
     const { setAuthenticated } = useContext(AuthenticateContext);
 
@@ -35,7 +36,9 @@ const RegisterUser: React.FC = () => {
             mobile_number: mobileNumber,
             date_of_birth: date,
         };
+
         const errMsg = validateUser(UserPayload);
+
         if (errMsg.length) {
             setError(errMsg);
             return;
@@ -43,28 +46,56 @@ const RegisterUser: React.FC = () => {
 
         try{
             await registerUser(UserPayload);
+            toast({
+                title: 'Successfully registered user!',
+                status: 'success',
+                duration: 7000,
+                isClosable: true,
+            })
         }
         catch (error){
+            var msg = "";
             switch (error.statusCode){
                 case 400:
-                    setError(error.message['detail']);
+                    msg = error.message['detail'];
                     break;
                 case 409:
-                    setError(error.message['detail']);
+                    msg = error.message['detail'];
                     break;
                 case 422:
                 default:
-                    setError('Unexpected error, could\'t create user');
+                    msg = 'Unexpected error, couldn\'t create user';
             }
+            setError(msg);
+            toast({
+                title: msg,
+                status: 'error',
+                duration: 7000,
+                isClosable: true,
+            })
             return;
         }
+
         try{
             await login(email, password);
             setAuthenticated(true);
+            toast({
+                title: 'Logged in successfully!',
+                status: 'success',
+                duration: 7000,
+                isClosable: true,
+            })
         }
         catch(error){
-            alert(`User created, but could\'t log in, redirecting to start page`);
+            toast({
+                title: 'Failed to log in!',
+                status: 'error',
+                duration: 7000,
+                isClosable: true,
+            })
+            
         }
+        
         history.push("/");
         
     }
