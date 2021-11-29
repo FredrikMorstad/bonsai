@@ -12,6 +12,9 @@ def get_user_by_email(db: Session, email: EmailStr):
 def get_user_by_username(db: Session, username: str):
     return db.query(User).filter(User.username == username).first()
 
+def get_user_by_mobile_number(db: Session, mobile_number: int):
+    return db.query(User).filter(User.mobile_number == mobile_number).first()
+
 def create_user(db: Session, new_user: New_user):
     db_user = User(**new_user.dict())
     db.add(db_user)
