@@ -24,14 +24,10 @@ const Navbar = () => {
         {authenticated ? (
           <Button onClick={logout}> Logout </Button>
         ) : (
-          <Button onClick={moveToLogin}> Login </Button>
-        )}
-      </Center>
-      <Center mr=".75rem">
-        {authenticated ? (
-          <div></div>
-        ) : (
-          <Button onClick={moveToRegister}> Register </Button>
+          <div>
+            <Button onClick={moveToLogin} mr="0.25rem"> Login </Button>
+            <Button onClick={moveToRegister}> Register </Button>
+          </div>
         )}
       </Center>
     </Flex>
