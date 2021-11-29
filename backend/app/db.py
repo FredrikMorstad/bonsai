@@ -11,9 +11,15 @@ for e in env:
     env_key = os.getenv(e)
     if env_key:
         env_variables = env_key
-        break;
+        break
 
 config = env_config[env_variables]
+
+if not os.path.exists(config.DB_FOLDER):
+    os.mkdir(config.DB_FOLDER)
+if not os.path.exists(config.DB_URI):
+    open(config.DB_URI, 'w')
+    
 engine = create_engine(f'sqlite:///{config.DB_URI}', connect_args={'check_same_thread': False})
 session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
