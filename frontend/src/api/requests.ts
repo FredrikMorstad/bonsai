@@ -31,7 +31,6 @@ export const post = async <T>(url: string, data: any, auth = false) => {
       "Access-Control-Allow-Origin": "*",
     },
   });
-  console.log(baseUrl + url);
   if (auth) {
     return authFetch<T>(request);
   }
