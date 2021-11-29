@@ -1,57 +1,121 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { validateUser } from 'utils/registrationValidator'
-import { Box } from '@chakra-ui/react'
+import { FormControl, Input, Flex, Button, Heading } from '@chakra-ui/react'
+import "./registerForm.css"
+import { registerUser } from 'api/requests';
+import { login } from 'api/auth';
+import { AuthenticateContext } from 'context/authProvider';
+import { errorMonitor } from 'stream';
+import { useHistory } from 'react-router';
+
 
 const RegisterUser: React.FC = () => {
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [mobileNumber, setMobileNumber] = useState<undefined | number>();
+    const [mobileNumber, setMobileNumber] = useState<number>();
     const [email, setEmail] = useState('');
     const [date, setDate] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [passwordValidation, setPasswordValidation] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
+    
+    const history = useHistory();
+    const [regErr, setError] = useState<undefined | string []>();
+    const { setAuthenticated } = useContext(AuthenticateContext);
 
-    const [regErr, setRegErr] = useState<undefined | string []>();
-
-    const newUser = { 
-        name: name, 
-        lastName: lastName, 
-        email: email,
-        mobileNumber: mobileNumber,
-        date: date,
-    };
-
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        const errMsg = validateUser(newUser);
-        console.log(errMsg);
+        const UserPayload = { 
+            first_name: name, 
+            last_name: lastName, 
+            password: password,
+            password_validation: passwordValidation,
+            email: email,
+            username: username,
+            mobile_number: mobileNumber,
+            date_of_birth: date,
+        };
+        const errMsg = validateUser(UserPayload);
         if (errMsg.length) {
-            setRegErr(errMsg);
+            setError(errMsg);
             return;
         }
 
-        alert(`Submitting name ${lastName}, ${name}`)
+        try{
+            await registerUser(UserPayload);
+        }
+        catch (error){
+            switch (error.statusCode){
+                case 400:
+                    setError(error.message['detail']);
+                    break;
+                case 409:
+                    setError(error.message['detail']);
+                    break;
+                case 422:
+                default:
+                    setError('Unexpected error, could\'t create user');
+            }
+            return;
+        }
+        try{
+            await login(email, password);
+            setAuthenticated(true);
+        }
+        catch(error){
+            alert(`User created, but could\'t log in, redirecting to start page`);
+        }
+        history.push("/");
+        
     }
     return (
-        <Box>
+        <Flex width="100%" align="center" justifyContent="center">
+            
             <form onSubmit={handleSubmit}>
-                <label>
-                    <input name='name' type='text' value={name} onChange={e => setName(e.target.value)}
-                        placeholder='First name' required />
-                    <input name='lastName' type='text' value={lastName} onChange={e => setLastName(e.target.value)}
-                        placeholder='Last name' required />
-                    <input name='mobileNumber' type='number' value={mobileNumber} onChange={e => setMobileNumber(parseInt(e.target.value,10))}
-                        placeholder='Mobile number' required />
-                    <input name='date' type='date' value={date} onChange={e => setDate(e.target.value)}
-                        placeholder='date' required />
-                    <input name='email' type='text' value={email} onChange={e => setEmail(e.target.value)}
-                        placeholder='e-mail' required />
-                </label>
-                <input type='submit' value='Submit' />
+                    <Heading>Register</Heading>
+                    <FormControl mt="0.5rem" id='username' isRequired>
+                        <Input name='username' type='text' value={username} onChange={e => setUsername(e.target.value)}
+                            placeholder='username' autoFocus />
+                    </FormControl>
+                    <FormControl mt="0.5rem" id='email' isRequired>
+                        <Input name='email' type='text' value={email} onChange={e => setEmail(e.target.value)}
+                            placeholder='e-mail' />
+                    </FormControl>
+                    <FormControl mt="0.5rem" id='password' isRequired>
+                        <Input name='password' type='password' value={password} onChange={e => setPassword(e.target.value)}
+                            placeholder='password' />
+                    </FormControl>
+                    <FormControl mt="0.5rem" id='passwordValidation' isRequired>
+                        <Input name='passwordValidation' type='password' value={passwordValidation} onChange={e => setPasswordValidation(e.target.value)}
+                            placeholder='Validate password' />
+                    </FormControl>
+                    <Flex>
+                        <FormControl mt="0.5rem" id='name' mr="0.25rem">
+                            <Input name='name' type='text' value={name} onChange={e => setName(e.target.value)}
+                                placeholder='First name' />
+                        </FormControl>
+                        <FormControl mt="0.5rem" id='lastName' ml="0.25rem">
+                            <Input name='lastName' type='text' value={lastName} onChange={e => setLastName(e.target.value)}
+                                placeholder='Last name' />
+                        </FormControl>
+                    </Flex>
+                    <FormControl mt="0.5rem" id='mobileNumber'>
+                        <Input name='mobileNumber' type='number' onChange={e => setMobileNumber(parseInt(e.target.value,10))}
+                            placeholder='Mobile number' />
+                    </FormControl>
+                    <FormControl mt="0.5rem" id='date'>
+                        <Input name='date' type='date' value={date} onChange={e => setDate(e.target.value)}
+                            placeholder='date' />
+                    </FormControl>
+                <Button type='submit' value='Submit' width="full" mt="0.5rem">Submit</Button>
             </form>
             {regErr && (
-                <p>{regErr}</p>
+                <div>
+                    <br></br>
+                    <p>{regErr}</p>
+                </div>
             )}
-        </Box>
+        </Flex>
     );
 }
 

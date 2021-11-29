@@ -1,3 +1,4 @@
+import { UserPayload } from "api/apiModels";
 
 const validateEmail = (email: string) => {
     return new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(email);
@@ -15,29 +16,24 @@ const validateDate = (date: string) => {
     // return new RegExp('^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$').test(lastName);
 }
 
-interface newUser{
-    name: string,
-    lastName: string,
-    email: string,
-    mobileNumber?: number,
-    date: string,
-}
-
-export const validateUser = (regInp: newUser) => {
-    if (!validateName(regInp.name)) {
+export const validateUser = (userInp: UserPayload) => {
+    if (!validateName(userInp.name)) {
         return ['First name format wrong']
     }
-    if (!validateLastName(regInp.lastName)) {
+    if (!validateLastName(userInp.lastName)) {
         return ['Last name format wrong']
     }
-    if (!validateEmail(regInp.email)) {
+    if (!validateEmail(userInp.email)) {
         return ['Email format wrong']
     }
-    if (regInp.mobileNumber && regInp.mobileNumber.toString().length !== 8) {
+    if (userInp.mobileNumber && userInp.mobileNumber.toString().length !== 8) {
         return ['Mobile number format wrong']
     }
-    if (!validateDate(regInp.date)) {
+    if (!validateDate(userInp.date)) {
         return ['Date format wrong']
+    }
+    if (userInp.password != userInp.password_validation) {
+        return ['Passwords don\'t match']
     }
     return []
 }
