@@ -3,17 +3,22 @@ from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
 class User_base(BaseModel):
-    first_name: str
-    last_name: str
     username: str
     email: EmailStr
+    first_name: Optional[str]
+    last_name: Optional[str]
+    date_of_birth: Optional[str]
+    mobile_number: Optional[int]
 
     class Config:
         orm_mode = True
 
 class New_user(User_base):
     password: str 
-    role: Optional[str]
+    # role: Optional[str]
+
+class New_user_payload(New_user):
+    password_validation: str 
 
 class User_model(New_user):
     user_id: int

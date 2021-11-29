@@ -1,7 +1,7 @@
 from sqlalchemy import Table, Column, Integer, Float, String, DateTime, types, ForeignKey
 from sqlalchemy.schema import PrimaryKeyConstraint
 from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, validates
 from sqlalchemy_utils import EmailType, NumericRangeType, PhoneNumberType
 from passlib.hash import pbkdf2_sha256
 from .db import Base
@@ -16,13 +16,15 @@ class User(Base):
     __tablename__ = "users"
 
     user_id = Column(Integer, primary_key=True, index=True)
-    first_name = Column(String(30), nullable=False)
-    last_name = Column(String(45), nullable=False)
-    username = Column(String(45), unique=True)
-    email = Column(EmailType, unique=True)
+    first_name = Column(String(30))
+    last_name = Column(String(45))
+    username = Column(String(45), unique=True, nullable=False)
+    mobile_number = Column(Integer, unique=True)
+    email = Column(EmailType, unique=True, nullable=False)
     password = Column(String(300), nullable=False)
-    role = Column(String(40), default='user')
+    # role = Column(String(40), default='user')
     # phone = Column(PhoneNumberType)
+    date_of_birth = Column(String(16)) 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     last_login = Column(DateTime(timezone=True), server_default=func.now())
 
@@ -34,6 +36,7 @@ class User(Base):
 
     def validate_password(self, password: str):
         return pbkdf2_sha256.verify(password, self.password)
+
 
 class Plant(Base):
     __tablename__ = "plants"
