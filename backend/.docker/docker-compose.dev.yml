@@ -7,7 +7,7 @@ services:
     ports:
       - "3000:5000"
     volumes:
-        - ../db/dev-plant_db.sqlite3:/app/dev-plant_db.sqlite3
+        - ../db/dev-plant_db.sqlite3:/app/db/dev-plant_db.sqlite3
     environment:
         production_api: 'dev'
 
