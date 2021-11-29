@@ -10,6 +10,7 @@ const Navbar = () => {
   const history = useHistory();
 
   const moveToLogin = () => history.push("/login");
+  const moveToRegister = () => history.push("/register");
 
   const logout = () => {
     clearTokens();
@@ -18,12 +19,19 @@ const Navbar = () => {
   };
 
   return (
-    <Flex h="7.5vh" w="100%" bg="blue" justifyContent="flex-end">
+    <Flex h="7.5vh" w="100%" bg="darkgreen" justifyContent="flex-end">
       <Center mr=".75rem">
         {authenticated ? (
           <Button onClick={logout}> Logout </Button>
         ) : (
           <Button onClick={moveToLogin}> Login </Button>
+        )}
+      </Center>
+      <Center mr=".75rem">
+        {authenticated ? (
+          <div></div>
+        ) : (
+          <Button onClick={moveToRegister}> Register </Button>
         )}
       </Center>
     </Flex>
