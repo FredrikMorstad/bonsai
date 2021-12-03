@@ -28,7 +28,7 @@ def create_new_user(new_user: New_user_payload, db: Session=Depends(get_db)):
     error_msg = check_unique(db, email=new_user.email.lower(), username=new_user.username, mobile_number=new_user.mobile_number)
 
     if error_msg:
-       raise HTTPException(status_code=422, detail=error_msg)
+       raise HTTPException(status_code=409, detail=error_msg)
 
     if new_user.password != new_user.password_validation:
        raise HTTPException(status_code=400, detail='Passwords don\'t match')
