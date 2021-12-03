@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
-import { RouteProps, Route, Redirect } from "react-router-dom";
-import { AuthenticateContext } from "context/authProvider";
-import { IRouteProps } from "./privateRoute";
+import React, { useContext } from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { AuthenticateContext } from 'context/authProvider';
+import { IRouteProps } from './privateRoute';
 
 const AuthorizationRoute: React.FC<IRouteProps> = ({
   component: Component,
@@ -21,7 +21,7 @@ const AuthorizationRoute: React.FC<IRouteProps> = ({
           <Component {...routerProps} />
         ) : (
           <Redirect
-            to={{ pathname: "/", state: { from: routerProps.location } }}
+            to={{ pathname: '/', state: { from: routerProps.location } }}
           />
         )
       }
