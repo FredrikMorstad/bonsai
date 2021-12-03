@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import { Route, Redirect, RouteProps } from "react-router-dom";
-import { AuthenticateContext } from "context/authProvider";
+import React, { useContext } from 'react';
+import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { AuthenticateContext } from 'context/authProvider';
 
 export interface IRouteProps extends RouteProps {
   component: any;
@@ -24,7 +24,7 @@ const PrivateRoute: React.FC<IRouteProps> = ({
           <Component {...routerProps} />
         ) : (
           <Redirect
-            to={{ pathname: "/login", state: { from: routerProps.location } }}
+            to={{ pathname: '/login', state: { from: routerProps.location } }}
           />
         )
       }

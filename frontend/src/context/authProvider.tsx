@@ -1,5 +1,5 @@
-import React, { useState, useEffect, createContext } from "react";
-import { verifyAuthentication } from "api/auth";
+import React, { useState, useEffect, createContext } from 'react';
+import { verifyAuthentication } from 'api/auth';
 
 export const AuthenticateContext = createContext({
   authenticated: false,
@@ -14,7 +14,6 @@ const AuthenticateProvider: React.FC = ({ children }) => {
   const isAuth = async () => {
     setValidating(true);
     const auth = await verifyAuthentication();
-    // console.log("auth : ", auth);
     setAuthenticated(auth);
     setValidating(false);
   };
@@ -25,8 +24,7 @@ const AuthenticateProvider: React.FC = ({ children }) => {
 
   return (
     <AuthenticateContext.Provider
-      value={{ authenticated, setAuthenticated, isValidating }}
-    >
+      value={{ authenticated, setAuthenticated, isValidating }}>
       {children}
     </AuthenticateContext.Provider>
   );
