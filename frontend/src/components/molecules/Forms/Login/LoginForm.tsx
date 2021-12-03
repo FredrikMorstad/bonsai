@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
-import { login } from "api/auth";
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext } from 'react';
+import { login } from 'api/auth';
+import { useHistory } from 'react-router-dom';
 import {
   Box,
   Flex,
@@ -10,8 +10,8 @@ import {
   Input,
   Button,
   Center,
-} from "@chakra-ui/react";
-import { AuthenticateContext } from "context/authProvider";
+} from '@chakra-ui/react';
+import { AuthenticateContext } from 'context/authProvider';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string | undefined>();
@@ -24,22 +24,22 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
 
     if (email === undefined || password === undefined) {
-      setError("Both email and password must be added");
+      setError('Both email and password must be added');
       return;
     }
 
     try {
       await login(email, password);
       setAuthenticated(true);
-      history.push("/");
+      history.push('/');
     } catch (error) {
       // TODO regex email validating
       console.log(error.statusCode);
       if (error.statusCode === 401) {
-        setError("Invalid email or password");
+        setError('Invalid email or password');
         return;
       } else {
-        setError("Unexpected error");
+        setError('Unexpected error');
       }
     }
   };

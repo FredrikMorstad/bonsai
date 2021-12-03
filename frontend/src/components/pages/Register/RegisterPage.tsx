@@ -1,13 +1,13 @@
-import React from 'react'
-import RegisterUser from 'components/molecules/Forms/RegisterForm'
-import { Box } from '@chakra-ui/react'
+import React from 'react';
+import { RegisterForm } from 'components/molecules/Forms/index';
+import { Box } from '@chakra-ui/react';
 
 const RegisterPage: React.FC = () => {
-    return (
-        <Box>
-            <RegisterUser/>
-        </Box>
-    )
-}
+  return (
+    <Box>
+      <RegisterForm />
+    </Box>
+  );
+};
 
 export default RegisterPage;
