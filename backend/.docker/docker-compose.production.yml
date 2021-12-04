@@ -7,5 +7,5 @@ services:
     volumes:
         - ../db/prod-plant_db.sqlite3:/app/db/prod-plant_db.sqlite3
     environment:
-        production_api: 'prod'
+        API_VERSION: 'prod'
 

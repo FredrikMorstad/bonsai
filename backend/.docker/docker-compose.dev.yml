@@ -9,7 +9,5 @@ services:
     volumes:
         - ../db/dev-plant_db.sqlite3:/app/db/dev-plant_db.sqlite3
     environment:
-        production_api: 'dev'
-
-
+        API_VERSION: 'dev'
 

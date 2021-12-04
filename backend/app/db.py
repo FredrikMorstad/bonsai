@@ -4,19 +4,14 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-env = ['production_api', 'dev']
-env_variables = 'local'
+env_variable = os.getenv('API_VERSION')
+if env_variable == None:
+    env_variable = 'local'
 
-for e in env:
-    env_key = os.getenv(e)
-    if env_key:
-        env_variables = env_key
-        break
-
-config = env_config[env_variables]
+config = env_config[env_variable]
 
 # prod and dev db mounted in dockerfile
-if env_variables == 'local':
+if env_variable == 'local':
     if not os.path.exists(config.DB_FOLDER):
         os.mkdir(config.DB_FOLDER)
     if not os.path.exists(config.DB_URI):
