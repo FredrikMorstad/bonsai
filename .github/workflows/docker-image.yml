@@ -23,3 +23,11 @@ jobs:
           push: true
           file: backend/.docker/dockerfile
           tags: ghcr.io/fredrikmorstad/plants-meet-internet/prod-api:latest
+
+    - name: Build and push frontend Docker image
+      uses: docker/build-push-action@v2
+      with:
+          context: ./frontend
+          push: true
+          file: frontend/.docker/dockerfile
+          tags: ghcr.io/fredrikmorstad/plants-meet-internet/frontend-production:latest
