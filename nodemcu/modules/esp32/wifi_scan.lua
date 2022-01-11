@@ -2,7 +2,10 @@ wifi.start()
 wifi.mode(wifi.STATION)
 wifi.sta.disconnect()
 
-cfg = {ssid="PlantBridge", hidden=1} -- Get values from config
+local json_file_to_dict = require('json').json_file_to_dict -- Magic
+config = json_file_to_dict('config.json')
+
+cfg = {ssid=config.wifi.ssid, pwd=config.wifi.pwd, hidden=1} -- set config values for the scan
 
 print("Networks:")
 wifi.sta.scan(cfg, function(err, succ)
