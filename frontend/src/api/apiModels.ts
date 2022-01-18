@@ -15,6 +15,18 @@ export interface User {
 export interface UserPayload extends User {
   password_validation: string;
 }
+export interface PlantPayload {
+  name: string;
+  species?: string;
+  temperature_min?: number;
+  temperature_max?: number;
+  humidity_min?: number;
+  humidity_max?: number;
+  soil_moisture_min?: number;
+  soil_moisture_max?: number;
+  region?: string;
+}
+
 export interface TokenPair {
   access_token: string;
   refresh_token: string;

@@ -4,6 +4,7 @@ import {
   UserPayload,
   PartialMember,
   User,
+  PlantPayload,
 } from 'api/apiModels';
 import { getTokens, setTokens } from 'api/token';
 import { renewToken } from './auth';
@@ -90,3 +91,6 @@ export const get_user_with_token = async (): Promise<PartialMember> =>
 
 export const registerUser = async (user: UserPayload): Promise<User> =>
   post<User>('user/', user);
+
+export const registerPlant = async (plant: PlantPayload): Promise<PlantPayload> =>
+  post<PlantPayload>('profile/', plant)
