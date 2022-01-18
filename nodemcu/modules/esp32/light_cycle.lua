@@ -21,10 +21,11 @@ off = 1 - on
 light_status = -1
 
 -- Time interval when the light should be on
-on_from = config.light_conf.light_on_from
-on_to = config.light_conf.light_on_to
+on_from = config.light.on_from
+on_to = config.light.on_to
+secs = 30
 
-timer:alarm(30000, tmr.ALARM_AUTO, function() -- Check clock every minute
+timer:alarm(secs * 1000, tmr.ALARM_AUTO, function() -- Check clock every minute
     time = get_time_now()
     tmp_t = tonumber(string.sub(time, 1, 2)) -- Look only at hours
 
